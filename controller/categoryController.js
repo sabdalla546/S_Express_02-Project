@@ -29,7 +29,7 @@ const validateData = (req,res,next)=>{
         req.body = schema.parse(req.body);
         next();
       } catch (error) {
-        res.status(400).json(error.message);
+        res.status(400).json(error.issues);
       }
 }
 const addItem = (req,res)=>{
