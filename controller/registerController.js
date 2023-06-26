@@ -24,14 +24,29 @@ const validateData = (req,res,next)=>{
         res.status(400).json(error.issues);
         }
 }
+const checkEmail = (users,email)=>{
+    const isFound =users.some(element => {
+        if (element.email == email) {
+          return true;
+        }
+        return false;
+      });
+      return isFound;
+}
 const addUser = (req,res)=>{
     const {email, password} = req.body;
     const hasedPassword = hashed(password);
-    users.push({email,password:hasedPassword});
-    console.log(users);
-    res.json({
-        "success": true
-    })
+    const isFound = checkEmail(users,email);
+    if(isFound) {
+        res.send("you already registeration");
+    }else{
+        users.push({email,password:hasedPassword});
+        console.log(users);
+        res.json({
+            "success": true
+        })
+    }
+
 }
 
 module.exports = [
